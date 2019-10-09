@@ -1,0 +1,48 @@
+#Go To Hell skript by Cevans98#
+
+options:
+		P: &9&l[&4GoToHell&9&l] 
+	
+command: /gotohell <enable:disable>
+	permission: skript.op
+	description: Enables the scenario
+	aliases: /gth
+	trigger:
+		if arg 1 is "enable" or "on":
+			if {GoToHell} is false:
+				set {GoToHell} to true
+				broadcast "{@P} &cEnabled!"
+				#Martin Tyler reference to anyone who played FIFA#
+				broadcast "&cIf you can't take the heat, don't stay in the kitchen!"
+			else:
+				message "{@P} &calready Enabled!"
+				
+		else if arg 1 is "disable" or "off:
+			if {GoToHell} is true:
+				set {GoToHell} to false
+				broadcast "{@P} &cDisabled!"
+			else:
+				message "{@P} &calready Disabled!"
+				
+#I hope you enjoy the pun!#
+
+command: /gotohelp
+	description: Describes the scenario to players.
+	trigger:
+		if {GoToHell} is true:
+			message "&9---------------------------------------------" to command sender
+			message "                                               " to command sender
+			message "{@P} &cis a scenario similar to SkyHigh!" to command sender	
+			message "&c Except in this scenario, instead of a height limit, by the 45 minute mark you must "Go To Hell" a.k.a the &4&lNether&c!" to command sender
+			message "&c You have 45 minutes to gear up before you &c&lmust &center the Nether!" to command sender
+			message "&c If you are not in the Nether after the 45 minute mark you will take 0.5 hearts of damage every 30 seconds!" to command sender
+			message "&&4&lHint: &cLava Buckets are very useful to have!"
+			message "                                               " to command sender
+			message "&9---------------------------------------------" to command sender
+		
+every 30 seconds:
+	loop all players:
+		{GoToHell} is true
+		loop-player is in "UHC":
+		damage the loop-player by 0.5 hearts
+	

@@ -1,0 +1,90 @@
+options:
+	Prefix : &9[&cBlacklist&9]&b
+	KickMSG : Server is full!
+
+	Blacklist : skript.blacklist	
+	BlacklistNotify : skript.blacklist.notify
+
+variables:
+	{blacklist} = false
+
+command /blacklist <text> [<text>]:
+	usage: /blacklist <command> [<player>]
+	permission: {@Blacklist}
+	trigger:
+		if arg 1 is "enable":
+			{blacklist} is false:
+				set {blacklist} to true
+				loop all players:
+					loop-player has permission "{@BlacklistNotify}":
+						message "{@Prefix} Enabled! &9[&aBy: &c%command sender%&9]" to loop-player 
+			else:
+				message "{@Prefix} The Blacklist is already &aenabled&b!"
+		else if arg 1 is "disable": 
+			{blacklist} is true:
+				set {blacklist} to false
+				loop all players:
+					loop-player has permission "{@BlacklistNotify}":
+						message "{@Prefix} Disabled! &9[&aBy: &c%command sender%&9]" to loop-player
+			else:
+				message "{@Prefix} The Blacklist is already &adisabled&b!"
+		else if arg 1 is "toggle":
+			{blacklist} is false:
+				set {blacklist} to true
+				loop all players:
+					loop-player has permission "{@BlacklistNotify}":
+						message "{@Prefix} Enabled! &9[&aBy: &c%command sender%&9]"
+			else:
+				set {blacklist} to false
+				loop all players:
+					loop-player has permission "{@BlacklistNotify}":
+						message "{@Prefix} Disabled! &9[&aBy: &c%command sender%&9]"
+		else if arg 1 is "add":
+			if arg 2 is set:
+				if {blacklisted::%arg 2%} is true:
+					message "{@Prefix} The Blacklist &aalready &bcontains &c%arg 2%"	
+				else:
+					set {blacklisted::%arg 2%} to true
+					loop all players:
+						loop-player has permission "{@BlacklistNotify}"
+
+						message "{@Prefix} &c%command sender% &badded &c%arg 2% &bto the Blacklist!" to loop-player
+			else:
+				message "{@Prefix} You must specify who you want to add to the Blacklist!"
+		else if arg 1 is "remove":
+			if arg 2 is set:
+				if {blacklisted::%arg 2%} is true:
+					delete {blacklisted::%arg 2%}
+					loop all players:
+						loop-player has permission "{@BlacklistNotify}"
+						message "{@Prefix} &c%command sender% &bRemoved &c%arg 2% &bfrom the Blacklist!" to loop-player
+				else:
+					message "{@Prefix} The Blacklist &adoes not &bcontain &c%arg 2%"
+			else:
+				message "{@Prefix} You must specify who you want to remove from the Blacklist!"
+		else if arg 1 is "view" or "list":
+			message "&9>>&cBlacklisted Users&9<<"
+			message "&b%{blacklisted::*}%"
+		else if arg 1 is "clear":
+			clear {blacklisted::*}
+			loop all players:
+				loop-player has permission "{@BlacklistNotify}"
+				message "{@Prefix} &c%command sender% &bsuccessfully cleared the Blacklist!"
+		else if arg 1 is "help":
+			message "&c/blacklist enable &a- &bEnables the Blacklist!"
+			message "&c/blacklist disable &a- &bDisables the Blacklist!"
+			message "&c/blacklist toggle &a- &bToggles the Blacklist!"
+			message "&c/blacklist add &a- &bAdds a player to the Blacklist!"
+			message "&c/blacklist remove &a- &bRemoves a player from the Blacklist!"
+			message "&c/blacklist view &a- &bViews the Blacklist"
+			message "&c/blacklist clear &a- &bClears the Blacklist"
+			message "&c/blacklist help &a- &bThis help page"
+		else:
+			message "{@Prefix} Invalid Syntax! Do &c/blacklist help &bfor the commands!"
+
+on connect:
+	{blacklist} is true
+	{blacklisted::%player%} is true:
+		kick the player due to "{@KickMSG}"
+
+#=By Sitris=#

@@ -1,0 +1,10 @@
+#Better SlaveMarket broadcast by Cevans98#
+
+options:
+		P: &9&l[&4SlaveMarket&9&l] 
+	
+command /smbc <text>:
+	permission: skript.op
+	description: Broadcasts using the SlaveMarket prefix!
+	trigger:
+		broadcast "{@P} &c%text%"

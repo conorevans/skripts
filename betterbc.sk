@@ -1,0 +1,11 @@
+#BetterBroadcast by Cevans98#
+
+options:
+	P: &9&l[&4CevansUHC&9&l]
+
+command /betterbc <text>:
+	permission: skript.op
+	usage: /betterbc message
+	aliases: /bbc
+	trigger:
+		broadcast "{@P} &c%text%"

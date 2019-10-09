@@ -1,0 +1,88 @@
+#LongRanger skript by Cevans98#
+#Idea by /u/Zodiac_Nick#
+#Feel free to edit and release#
+	
+options:
+	P: &9&l[&4LongRanger&9&l]
+	
+command /longranger <text>:
+	permission: skript.op
+	aliases: /lr
+	trigger:
+		if arg 1 is equal to "enable" or "on":
+			set {longranger} to true
+			broadcast "{@P} &cEnabled!"
+				
+		else if arg 1 is equal to "disable" or "off"	
+			set {longranger} to false
+			broadcast "{@P} &cDisabled!"
+			
+#Long Shots Damage#
+#0-10 = 0.5-1 heart of damage#
+#10-20 = 1-2 hearts of damage#
+#20-30 = 2-3 hearts of damage#
+#40-50 = 4-5 hearts of damage#
+#and so on#
+#100 blocks or more registers an instakill#
+
+on damage of player:
+	projectile exists
+	projectile is an arrow
+	shooter is a player
+	if {longranger} is true
+	cancel the event
+	set {_dist} to the distance between the victim and the attacker:
+		if {_dist} is greater than 0 and less than 10:
+		damage victim (random integer between 0.5-1) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+		
+		else if {_dist} is greater than 10 and less than 20:
+		damage victim (random integer between 1-2) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+	
+		else if {_dist} is greater than 20 and less than 30:
+		damage victim (random integer between 2-3) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+		
+		else if {_dist} is greater than 30 and less than 40:
+		damage victim (random integer between 3-4) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+	
+		else if {_dist} is greater than 40 and less than 50:
+		damage victim (random integer between 4-5) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+	
+		else if {_dist} is greater than 50 and less than 60:
+		damage victim (random integer between 5-6) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+	
+		else if {_dist} is greater than 60 and less than 70:
+		damage victim (random integer between 6-7) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+		
+		else if {_dist} is greater than 70 and less than 80:
+		damage victim (random integer between 7-8) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+		
+		else if {_dist} is greater than 80 and less than 90:
+		damage victim (random integer between 8-9) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+		
+		else if {_dist} is greater than 90 and less than 100:
+		damage victim (random integer between 9-10) of health)
+		message attacker "You just shot %victim% from {_dist} blocks"
+		message victim "You were just shot by %attacker% from {_dist} blocks!"
+		
+		else if {_dist} is greater than 100:
+		kill victim
+		broadcast "{@P} &3%victim% &4got instakilled by &3%attacker% &4from &9{_dist} &4blocks!"
+		

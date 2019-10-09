@@ -1,0 +1,57 @@
+variables:
+		{bowfighter}=false
+ 
+command /bowfighter <text>:
+	permission: skript.op
+	aliases: /bf
+	trigger:
+		if arg 1 is "on":
+			if {bowfighter} is false:
+				set {bowfighter} to true
+				broadcast "&9&l[&4Bowfighters&9&l] &cEnabled by &6%command sender%&c!"
+				loop all players:
+					give 1 arrow to the loop-player
+				loop all players:
+					give 2 string to the loop-player
+				loop all players:
+					give a book of Infinity 1 to the loop-player
+					broadcast "&9[&4Bowfighters&9] &cKits given!"
+								
+			else:
+				message "&9[&4Bowfighters&9] &cAlready Enabled!"
+								
+		if arg 1 is "off":
+			if {bowfighter} is true:
+				set {bowfighter} to false
+				broadcast "&9[&4Bowfighters&9] &cDisabled by &6%command sender%&c!"
+				stop
+								
+			else:
+				message "&9[&4Bowfighters&9] &cAlready Disabled!"
+ 
+on craft of stone sword:
+		if {bowfighter} is true:
+				cancel the event
+				message "&aBetter luck next time!"
+ 
+ 
+on craft of iron axe:
+		if {bowfighter} is true:
+				cancel the event
+				message "&aBetter luck next time!"
+ 
+ 
+on craft of iron sword:
+		if {bowfighter} is true:
+				cancel the event
+				message "&aBetter luck next time!"
+ 
+on craft of diamond axe:
+		if {bowfighter} is true:
+				cancel the event
+				message "&aBetter luck next time!"
+ 
+on craft of diamond sword:
+		if {bowfighter} is true:
+				cancel the event
+				message "&aBetter luck next time!"

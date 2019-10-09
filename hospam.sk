@@ -1,0 +1,150 @@
+#Helpop/Chat Spam by Cevans98
+
+options:
+	CC: &c
+	HC: &9&l
+	Command1: helpopspam
+	
+	Command2: chatspam
+	Perms: skript.op
+	PermsMSG: &4&lYou do not have permission to execute this command!"
+	
+command {@Command1} <text> <player>:
+	permission: {@Perms}
+	permission message: {@PermsMSG}
+		trigger:
+			if arg 1 is not set:
+				command sender command "{@Command1} help"
+			
+			else if arg 1 is "add":
+				if arg 2 is not set:
+					message "{@CC}You must specify a player."
+					
+				else:
+					set {hospammer::%arg-2%} to true
+					add arg-2 to {hospammers::*}
+					message "{@HC}%arg-2% {@CC}added to Helpop Spam list!"
+				
+			else if arg 1 is "remove":
+				if arg 2 is not set:
+					message "{@CC}You must specify a player."
+					
+				else:
+					{hospammer::%arg-2%} is false:
+					message "{@HC}%arg-2% {@CC}isn't on the list!"
+					
+					else:
+						set {hospammer.%arg-2%} to false
+						remove arg-2 from {hospammers::*} 
+						message "{@HC}%arg-2% {@CC}remove from the Helpop Spam list!"
+					
+			else if arg 1 is "reset":
+				loop {hospammers::*}
+					set {hospammer::%loop-player%} to false
+				delete {hospammers::*}
+				message "{@CC}The Helpop Spam list has been completely reset!"
+				
+			else if arg 1 is "list":
+				message "{@CC}The following players are on the Helpop Spam list:"
+				message "{@HC}%{hospammers::*}%"
+				
+			else if arg 1 is "help" or "?" or "info":
+				message "{@CC}{@Command1} {@HC}add {@CC}- Adds a player to the list!"
+				message "{@CC}{@Command1} {@HC}remove {@CC}- Removes a player from the list!"
+				message "{@CC}{@Command1} {@HC}reset {@CC}- Resets the list!"
+				message "{@CC}{@Command1} {@HC}list {@CC}- Lists the players on the Helpop Spam List!"
+				message "{@CC}{@Command1} {@HC}help {@CC}- Brings up this help page!"
+	
+command {@Command2} <text> <player>:
+	permission: {@Perms}
+	permission message: {@PermsMSG}
+		trigger:
+			if arg 1 is not set:
+				command sender command "{@Command2} help"
+			
+			else if arg 1 is "add":
+				if arg 2 is not set:
+					message "{@CC}You must specify a player"
+				set {chatspammer::%arg-2%} to true
+				add arg-2 to {chatspammers::*}
+				message "{@HC}%arg-2% {@CC}added to Chat Spam list!"
+				
+			else if arg 1 is "remove":
+				if arg 2 is not set:
+					message "{@CC}You must specify a player"
+				
+				else:
+					{chatspammer::%arg-2%} is false:
+						message "{@HC}%arg-2% {@CC}isn't on the list!"
+					
+					else:
+						set {chatspammer.%arg-2%} to false
+						remove arg-2 from {chatspammers::*} 
+						message "{@HC}%arg-2% {@CC}remove from the Chat Spam list!"
+					
+			else if arg 1 is "reset":
+				loop {chatspammers::*}
+					set {chatspammer::%loop-player%} to false
+				delete {chatspammers::*}
+				message "{@CC}The Chat Spam list has been completely reset!"
+				
+			else if arg 1 is "list":
+				message "{@CC}The following players are on the Chat Spam list:"
+				message "{@HC}%{chatspammers::*}"
+				
+			else if arg 1 is "help" or "?" or "info":
+				message "{@CC}{@Command2} {@HC}add {@CC}- Adds a player to the list!"
+				message "{@CC}{@Command2} {@HC}remove {@CC}- Removes a player from the list!"
+				message "{@CC}{@Command2} {@HC}reset {@CC}- Resets the list!"
+				message "{@CC}{@Command2} {@HC}list {@CC}- Lists the players on the Chat Spam List!"
+				message "{@CC}{@Command2} {@HC}help {@CC}- Brings up this help page!"
+				
+command /sethelpoptimer <integer> <text>:
+	set {HelpopCooldownTime} to arg 1
+	if arg 2 is "minutes":
+		set {HelpopTime} to arg-2
+		
+	else if arg 2 is "seconds":
+		set {HelpopTime} to arg-2
+		
+	else:
+		message "{@CC}Argument number two must be in {@HC}minutes {@CC}or {@HC}seconds!"
+		
+command /setchattimer <integer> <text>:
+	set {ChatCooldownTime} to arg 1
+	if arg 2 is "minutes":
+		set {ChatTime} to arg-2
+		
+	else if arg 2 is "seconds":
+		set {ChatTime} to arg-2
+		
+	else:
+		message "{@CC}Argument number two must be in {@HC}minutes {@CC}or {@HC}seconds!"
+				
+on command "helpop":
+	{hospammer::%player%} is true:
+		if {Helpop.LastTime::%player%} is not set:
+			set {Helpop.LastTime::%player%} to now
+		else if {Helpop.LastTime::%player%} was less than %{HelpopCooldownTime} {HelpopTime}% ago:
+			message "{@CC}You are on the {@HC}Helpop Spam list!"
+			message "{@CC}This limits you to one helpop every {@HelpopCooldownTime}."
+			message "{@CC}Either helpop in game, comment on a post or send a message to {@HC}{@HostsRedditAcc} {@CC}if you don't believe you should be and wish to appeal!"
+		else:
+			set {Helpop.LastTime::%player%} to now
+			
+on chat:
+	if {Chat.LastTime::%player%} is not set:
+			set {Chat.LastTime::%player%} to now
+		else if {Chat.LastTime::%player%} was less than %{ChatCooldownTime} {ChatTime}% ago:
+			message "{@CC}You are on the {@HC}Chat Spam list!"
+			message "{@CC}This limits you to Chat once every %{ChatCooldownTime} {ChatTime}%"
+			message "{@CC}Either helpop in game, comment on a post or send a message to {@HC}{@HostsRedditAcc} {@CC}if you don't believe you should be and wish to appeal!"
+		else:
+			set {Chat.LastTime::%player%} to now
+			
+
+		
+		
+	
+				
+	

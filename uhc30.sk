@@ -1,0 +1,48 @@
+command /muf:
+	permission: skript.start
+	trigger:
+		execute console command "pvp global off"
+		execute console command "helpop Set day!"
+		execute console command "gamerule doMobSpawning False"
+		execute console command "gamerule doDaylightCycle True"
+		execute console command "butcher"
+		wait 2 ticks
+		execute console command "feed *"
+		wait 2 ticks
+		execute console command "heal *"
+		wait 2 ticks
+		execute console command "feature on PlayerHeads"
+		execute console command "skript enable WLRemove"
+		wait 2 ticks
+		execute console command "feature on PotionNerfs"
+		execute console command "start"
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cGame starting in &9&l3&c!"
+		wait 1 second
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cGame starting in &9&l2&c!"
+		wait 1 second
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cGame starting in 79&l1&c!"
+		wait 1 second
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cGame &9&lstarted&c! 
+		execute console command "freeze"
+		wait 2 ticks 
+		execute console command "timer 3600 &9&lTime until MeetUp:&c&l"
+		wait 10 seconds
+		execute console command "heal *"
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cFinal Heal Given!"
+		wait 20 seconds
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cHostile MobSpawning re-enabled!"
+		execute console command "gamerule doMobSpawning True"
+		wait 2650 seconds
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cPerma enabled!"
+		execute console command "gamerule doDaylightCycle False"
+		execute console command "time set 6000"
+		wait 15 minutes
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cIt's MeetUp!"
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cThe &9&lonly &cexcuse for not going to 0,0 is a &9&lfight"
+		broadcast "&9&l[&4Cevans' UHC&9&L] &cThis means no taming horses, caving, getting apples etc."
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cYou get &9&lone &cwarning before you will be &9&ldisqualified"
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cIf your teammate is AFK, his fault. Go to 0,0. If he's afk longer than 3 minutes after meetup is called I will disqualify him"
+		
+		
+		
+	

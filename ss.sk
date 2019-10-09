@@ -1,0 +1,179 @@
+options:
+	P: &8&l>>&6UltraHardcore&8&l<<&c
+	
+
+	
+command /sharpshooter [<text>]:
+	permission: skript.op
+	trigger:   
+		set {sharpshooter} to true
+		if arg 1 is not set:
+			broadcast "{@P} Teleporting in 3.."
+			wait 1 second
+			broadcast "{@P} Teleporting in 2.."
+			wait 1 second
+			broadcast "{@P} Teleporting in 1.."
+			wait 1 second
+			broadcast "{@P} Teleporting all players to their pads!"
+			loop all players:
+				if {captains::%loop-player%} is loop-player:
+					message "{@P} %loop-player% skipped"
+					execute console command "warp shootersspot %loop-player%"
+				else:
+					set {scatterme::%loop-player%} to loop-player
+			set {_Size} to (size of {scatterme::*})
+			loop {_Size} times:
+				set {_gettingScattered} to (random element out of {scatterme::*})
+				remove {_gettingScattered} from {scatterme::*}
+				execute console command "warp spad%loop-num% %{_gettingScattered}%"
+				broadcast "{@P} &4%{_gettingScattered}% &cteleported &7:: &8[&e%loop-num%&c/&e%{_Size}%&8]"
+				command "/sharpsound note.bass"
+				apply jump boost -10 to {_gettingScattered} for 13337 seconds
+				apply slowness 200 to {_gettingScattered} for 13337 seconds
+				apply mining fatigue 10 to {_gettingScattered} for 13337 seconds
+				apply blindness 10 to {_gettingScattered} for 13337 seconds
+				set the hunger of {_gettingScattered} to 1
+				command "/heal {_gettingScattered}"
+				delete {scatterme::%{gettingScattered}%} 
+			
+		else if arg 1 is "reset":
+			set {sharpshooter} to false
+			delete {shooting}
+			delete {scatteringNow}
+			delete {scatterme::*}
+			delete {_teleports}
+			delete {_gettingScattered}
+			delete {_Size}
+			delete {_captain}
+			delete {_newcaptain}
+			delete {_TeamNumber}
+			delete {captains::*}
+			broadcast "{@P} &4Sharpshooter &cReset!"
+		else if arg 1 is "stop":
+			set {sharpshooter} to false
+			broadcast "{@P} Pre-Game has ended! Preparing to scatter..."
+			command "/sk disable sharpshooter"
+		else:
+			message "{@P}<light red> Error in Command"
+			message "{@P} /sharpshooter -- scatters"
+			message "{@P} /sharpshooter reset -- resets variables"
+			
+command /setshooter [<player>] [<integer>]:
+	permission: skript.op
+	usage: "{@P} /setshooter [<player>] [<team>]"
+	trigger:
+	#Set
+		set {_captain} to arg 1
+		set {captains::%arg 1%} to arg 1
+		set {MyTeamNumber::%arg 1%} to arg 2
+		delete {scatterme::%arg 1%}
+		broadcast "{@P} %arg 1% is now a Shooter!"
+	#Add
+		set {_newcaptain} to arg 1
+		set {_TeamNumber} to arg 2
+		command "/warp captainteam%{_TeamNumber}% %{_newcaptain}%"
+		command "/team join %{_TeamNumber}% %{_newcaptain}%"
+		
+command /removeshooter [<player>] [<integer>]:
+	permission: skript.op
+	trigger:
+		set {_oldcaptain} to arg 1
+		remove {_oldcaptain} from {captains::*}
+		add {_oldcaptain} to {scatterme::*}
+		set {_TeamNumber} to arg 2
+		command "/team leave %{_oldcatpains}%"
+		broadcast "{@P} %{_oldcaptain}% is no longer a captain!"
+		stop
+	
+command /shoot [<player>] [<text>]:
+	permission: skript.op
+	usage: "{@P} /shoot [<player>] [<easy/hard>]
+	trigger:
+		if {sharpshooter} is true:
+			loop all players:
+				heal loop-player
+				set {_shooter} to arg 1
+				set {shooting} to true
+				give {_shooter} 1 bow
+				give {_shooter} 1 arrow
+				command "/warp shootingarea%arg 2% %{_shooter}%"
+				broadcast "{@P} %{_shooter}% is now shooting!"
+				message "{@P} You are now shooting, &4%{_shooter}%!" to {_shooter}
+				message "{@P} You have 25 seconds to shoot, or you will be dq'd for this round!" to {_shooter}
+				stop
+		
+command /noeffect [<player>]:
+	permission: skript.op
+	trigger:
+		if arg 1 is not set:
+			loop all players:
+				command "/effect %loop-player% clear"
+		else:		
+			command "/effect %arg 1% clear"
+
+command /skip [<player>]:
+	permission: skript.op
+	trigger:
+		set {_shooter} to arg 1
+		command "/warp shootersspot %{_shooter}%"
+		message "{@P} You have been skipped! Shoot quicker next time!"
+		command "/ci %{_shooter}%"
+		
+command /sharpsound [<text>]:
+	permission: skript.op
+	trigger:
+		loop all players:
+			command "/playsound %arg 1% %loop-player%"
+
+command /reapplyall:
+	permission: skript.op
+	trigger:
+		loop all players:
+			apply jump boost -10 to loop-player for 13337 seconds
+			apply slowness 200 to loop-player for 13337 seconds
+			apply mining fatigue 10 to loop-player for 13337 seconds
+			apply blindness 10 to loop-player for 13337 seconds
+			broadcast "{@P} Effects reapplied!"
+			stop
+command /wlall:
+	permission: skript.op
+	trigger:
+		command sender command "/whitelist enable"
+		command sender command "/whitelist add *"
+		broadcast "{@P} All players &6&lwhitelisted&c!"
+		broadcast "{@P} Whitelist is now &6&lON&c!"
+		
+on shoot:
+	if {shooting} is true:
+		set {_shooter} to shooter
+		wait 1 second
+		command "/warp shootersspot %{_shooter}%"
+		message "{@P} Your turn has ended!" to {_shooter}
+		command "/ci %{_shooter}%"
+		set {shooting} to false
+		
+on damage of player:
+	if damage was caused by projectile:
+		set {_victim} to victim
+		set {_attacker} to attacker
+		set {_TeamNumber} to {MyTeamNumber::%attacker%}
+		command "/team join %{_TeamNumber}% %{_victim}%"
+		command "/warp captainteam%{_TeamNumber}% %{_victim}%"
+		wait 2 seconds
+		command "/warp view %{_victim}%"
+		command "/noeffect %{_victim}%
+		broadcast "&6&l%attacker% &chas chosen &6&l%victim%&c!"
+		message "{@P} You have shot %{_victim}%!" to {_attacker}
+		command "/heal %{_victim}%"
+		
+on damage of player:
+	if damage was caused by fall:
+		victim is in "wssspawn"
+		cancel the event
+
+on load:
+	broadcast "{@P} &4Sharpshooter Setup &cloaded!"
+	command "/sharpshooter reset"
+
+on join:
+	set join message to "{@P} &4&l%player% &chas joined Sharpshooter!"

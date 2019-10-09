@@ -1,0 +1,33 @@
+#Paranoia skript by Cevans98#
+
+options: 
+		P: &9&l[&4Paranoia&9&l] 
+
+command /ultrap <text>:
+	permission: skript.op
+	trigger:
+		if arg 1 is "enable" or "on":
+			set {ultrap} to true
+			broadcast "{@P} &cEnabled!"
+					
+		else if arg 1 is "disable" or "off":
+			set {ultrap} to false
+			broadcast "{@P} &cDisabled!"
+					
+on mine of diamond ore:
+	if {ultrap} is true:
+		broadcast "{@P} &a%player% mined &9Diamonds! at §c%floor(x-coordinate of %player%)%, %floor(y-coordinate of %player%)%, %floor(z-coordinate of %player%)%!"
+	
+on death of player:
+	if {ultrap} is true:
+		broadcast "{@P} &a%attacker& Killed &a%victim% at §c%floor(x-coordinate of %player%)%, %floor(y-coordinate of %player%)%, %floor(z-coordinate of %player%)%!"
+	
+on eat of golden apple:
+	if {ultrap} is true:
+		broadcast "{@P} &a%player% &9ate a &6gapple at §c%floor(x-coordinate of %player%)%, %floor(y-coordinate of %player%)%, %floor(z-coordinate of %player%)%!"
+	
+on damage of player:
+	if {ultrap} is true:
+		if attacker is not a player:
+			broadcast "{@P} &a%player% &9took damage at §c%floor(x-coordinate of %player%)%, %floor(y-coordinate of %player%)%, %floor(z-coordinate of %player%)%!"
+	

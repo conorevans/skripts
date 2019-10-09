@@ -1,0 +1,29 @@
+#Permakill $kript by Cevans98#
+
+options:
+		P: &9&l[&4PermaKill&9&l]
+		
+command /permakill <text>:
+	permission: skript.op
+	description: Enables/Disables the scenario.
+	aliases: /pk
+	trigger:
+		if arg 1 is "enable" or "on":
+			set {perma} to true
+			broadcast "{@P} &cEnabled by &6%command sender%&c!"
+				
+		else if arg 1 is "disable" or "off":
+			set {perma} to false
+			broadcast "{@P} &cDisabled by &6%command sender%&c!"
+				
+on death of player:
+	{perma} is true:
+		if {time} is "night":
+			set {time} to "day"
+			execute console command "time set noon"
+			
+		else if {time} is "day":
+			set {time} to "night"
+			execute console command "time set midnight"
+	
+		

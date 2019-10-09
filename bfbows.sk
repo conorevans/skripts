@@ -1,0 +1,5 @@
+command /bfbows:
+	skript:
+	trigger:
+		loop all players:
+			give a bow of Infinity 1 to the loop-player

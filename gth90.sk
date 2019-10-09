@@ -1,0 +1,48 @@
+command /gth90:
+	permission: skript.start
+	trigger:
+		execute console command "pvp global off"
+		execute console command "helpop Set day!"
+		execute console command "gamerule doMobSpawning False"
+		execute console command "butcher"
+		wait 2 ticks
+		execute console command "feed *"
+		wait 2 ticks
+		execute console command "heal *"
+		wait 2 ticks
+		execute console command "feature on PlayerHeads"
+		execute console command "skript enable WLRemove"
+		wait 2 ticks
+		execute console command "feature on PotionNerfs"
+		execute console command "start"
+		wait 3 seconds
+		execute console command "freeze"
+		wait 2 seconds
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cButcher complete!"
+		wait 2 ticks 
+		execute console command "timer 1200 &9Time until PvP:&c"
+		wait 8 seconds
+		execute console command "heal *"
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cFinal Heal Given!"
+		wait 20 seconds
+		broadcast "&9&l[&4Cevans' UHC&9&l] &cHostile MobSpawning re-enabled!"
+		execute console command "gamerule doMobSpawning True"
+		wait 1050 seconds
+		broadcast "&9&l[&4 Cevans' UHC&9&l] &cPvP in 2 minutes. Helpop if being stalked. I will do nothing if you don't!"
+		wait 2 minutes
+		execute console command "pvp global on"
+		broadcast "&9&l[&4Cevans' UHC&9&l] &6PvP on!"
+		wait 2 ticks
+		execute console command "timer cancel"
+		wait 2 ticks
+		execute console command "timer 1500 &9Time until GoToHell is enabled:&c"
+		wait 24 minutes
+		execute console command "helpop Turn on gth in one minute"
+		wait 1 minute
+		execute console command "timer cancel"
+		wait two ticks
+		execute console command "timer 2700 &9Time until MeetUp:&c"
+		
+		
+		
+	

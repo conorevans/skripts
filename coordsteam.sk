@@ -1,0 +1,10 @@
+﻿command /coordsteam:
+	trigger:
+		if {Coords.LastTime::%player%} is not set:
+			set {Coords.LastTime::%player%} to now
+			make player execute command "pm §ris at §c%floor(x-coordinate of player)%, %floor(y-coordinate of player)%, %floor(z-coordinate of player)%!"
+		else if {Coords.LastTime::%player%} was less than 1 minute ago:
+			message "§cYou have messaged your coordinates in the last minute!"
+		else:
+			set {Coords.LastTime::%player%} to now
+			make player execute command "pm §ris at §c%floor(x-coordinate of player)%, %floor(y-coordinate of player)%, %floor(z-coordinate of player)%!"

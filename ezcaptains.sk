@@ -1,0 +1,96 @@
+#eZCaptains by Cevans98#
+#I doubt I'll ever use this but it was a challenge to myself#
+
+options:
+		P: &9&l[&4Captains&9&l] 
+
+command /captainsstart:
+	permission: skript.op
+	description: Sets teams
+	trigger:
+		execute console command "team reset"
+		execute console command "team create 1"
+		execute console command "team create 2"
+		execute console command "team create 3"
+		execute console command "team create 4"
+		execute console command "team create 5"
+		execute console command "team create 6"
+		execute console command "pausechat toggle"
+
+command /captainsadd <player> <player> <player> <player> <player> <player>:
+	permission: skript.op
+	description: Adds captains to the list.
+	trigger:
+		if arg 1 is set:
+			execute console command: "team join 1 %arg1%"
+			broadcast "&c%arg% &9is now captain of &cTeam 1!"
+			execute console command "warp cap1 %arg1%"
+			execute console command "pausechat add %arg1%"
+			
+		if arg 2 is set:
+			execute console command: "team join 2 %arg2%"
+			broadcast "&c%arg2% &9is now captain of &cTeam 2!"
+			execute console command "warp cap2 %arg2%"
+			execute console command "pausechat add %arg2%"
+			
+		if arg 3 is set:
+			execute console command: "team join 3 %arg3%"
+			broadcast "&c%arg3% &9is now captain of &cTeam 3!"
+			execute console command "warp cap3 %arg3%"
+			execute console command "pausechat add %arg3%"
+			
+		if arg 4 is set:
+			execute console command: "team join 4 %arg4%"
+			broadcast "&c%arg4% &9is now captain of &cTeam 4!"
+			execute console command "warp cap4 %arg4%"
+			execute console command "pausechat add %arg4%"
+			
+		if arg 5 is set:
+			execute console command: "team join 5 %arg5%"
+			broadcast "&c%arg5% &9is now captain of &cTeam 5!"
+			execute console command "warp cap5 %arg5%"
+			execute console command "pausechat add %arg5%"
+			
+		if arg 6 is set:
+			execute console command: "team join 6 %arg6%"
+			broadcast "&c%arg6% &9is now captain of &cTeam 6!"
+			execute console command "warp cap6 %arg6%"
+			execute console command "pausechat add %arg6%"
+			
+		else if arg 1 is not set:
+			message command sender "&cNo Captains have been defined!"
+			
+		else if arg 2 is not set:
+			message command sender "&cOnly one captain defined"
+			
+		else if arg 3 is not set:
+			message command sender "&cTwo Captains defined"
+			
+		else if arg 4 is not set:
+			message command sender "&cThree Captains defined"
+			
+		else if arg 5 is not set:
+			message command sender "&cFour Captains defined"
+			execute console command "team delete 5"
+			execute console command "team delete 6"
+			
+		else if arg 6 is not set:
+			message command sender "&cFive Captains set"
+			execute console command "team delete 6"
+			
+command /captainbc <player> <integer>:
+	permission: skript.op
+	aliases: /cbc
+	trigger:
+		if arg 1 is not set:
+			message "&9Must specify a captain"
+		
+		if arg 2 is not set:
+			message "&9Must specify an integer"
+		
+		else if arg 2 is "1":
+			broadcast "{@P} &c%arg1% choose &9%arg2% &cplayer please.."
+
+		else if arg 2 is "2":
+			broadcast "{@P} &c%arg1% choose &9%arg2% &cplayers please."
+			

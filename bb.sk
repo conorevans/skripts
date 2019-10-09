@@ -1,0 +1,48 @@
+#Barebones
+
+options:
+		P: &2&l[&a&lBarebones&2&l] 
+
+
+command /barebones <text>:
+	permission: skript.op
+	usage: /barebones <on/off>
+	aliases: /bb
+	trigger:	
+		if arg 1 is "on" or "enable":
+			set {barebones} to true
+			broadcast "{@p} &cEnabled by &9%command sender%"
+			execute console command "feature off GoldenHeads"
+			execute console command "feature off PlayerHeads"
+			
+		if arg 1 is "off" or "disable":
+			set {barebones} to false
+			broadcast "{@p} &cDisabled by &9%command sender%!"
+			
+on mine of gold ore:
+	if {barebones} is true:
+		cancel the event
+		set block to air
+		drop 1 iron ingot
+	
+on mine of diamond ore:
+	if {barebones} is true:
+		cancel the event
+		set block to air
+		drop 1 iron ingot
+		
+on craft of enchantment table:
+	if {barebones} is true:
+		cancel the event
+		message "{@p} Not in barebones!"
+		
+on craft of golden apple:
+	if {barebones} is true:
+		cancel the event
+		message "{@p} Not in barebones!"
+		
+on craft of anvil:
+	if {barebones} is true:
+		cancel the event
+		message "{@p} Not in barebones!"
+	

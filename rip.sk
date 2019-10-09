@@ -1,0 +1,19 @@
+#RIP to the fallen soldiers of the Irish Crew 2k14 ;_;#
+
+options:
+		P: &a[&0#RIP&6]
+		
+command /rip <text>:
+	permission: skript.op
+	trigger:
+		if arg 1 is "on" or "enable":
+			set {RIP} to true
+			broadcast "{@P} &aEnabled by #IrishCrew member &6%command sender%!"
+				
+		else if arg 1 is "off" or "disable":
+			set {RIP} to false
+			broadcast "{@P} &aDisabled by #IrishCrew member &6%command sender%!"
+				
+every second:
+	{RIP} is true
+	broadcast "{@P} &a#RIP to the fallen comrades &6Blad_chikn &aand &6iR3action_xddddddd!" 

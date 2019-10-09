@@ -1,0 +1,74 @@
+#TripleOres/CutClean fix by Cevans98#
+
+options:
+		P: &9&l[&4TripleOres&9&l]
+	
+command /tocc <text>:
+	permission: skript.op
+	trigger:
+		if arg 1 is "on" or "enable":
+			if {tripleores} is false
+				set {tripleores} to true
+				broadcast "{@P} &cEnabled!"
+					
+			else:
+				message "{@P} &calready Enabled!"
+					
+		else if arg 1 is "off" or "disable":
+			if {tripleores} is true
+				set {tripleores} to false
+				broadcast "{@P} &cDisabled!"
+					
+			else:
+				message "{@P} &calready Disabled!"
+					
+on mine of iron ore:
+	if {tripleores} is true
+	cancel the event
+	set block to air
+	drop 3 iron ingots
+	
+on mine of gold ore:
+	if {tripleores} is true
+	cancel the event
+	set block to air
+	drop 3 gold ingots
+	
+on mine of diamond ore:
+	if {tripleores} is true
+	drop 3 diamonds
+	
+on mine of coal ore:
+	if {tripleores} is true
+	drop 3 coal ingots
+	
+on mine of emerald ore:
+	drop 3 emeralds
+	
+on mine of gravel:
+	if {tripleores} is true
+	cancel event 
+	set block to air
+	drop 3 flint
+	
+on death of a pig:
+	if {tripleores} is true:
+		clear drops
+		drop 3 cooked porkchop at the pig
+
+on death of a cow:
+	if {tripleores} is true:
+		clear drops
+		drop 3 steak at the cow
+		drop 1 leather at the cow
+
+on death of a chicken:
+	if {tripleores} is true:
+		clear drops
+		drop 3 cooked chicken at the chicken
+		drop 2 feather at the chicken
+		
+on mine of oak leaf:
+	chance of 30%
+	drop 1 apple
+

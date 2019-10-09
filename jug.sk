@@ -1,0 +1,69 @@
+#Juggernaut skript by Cevans98#
+
+command /jug <text>:
+	permission: skript.op
+	usage: /jug <enable:disable>
+	trigger:
+		if arg 1 is "enable" or "on":
+			if {jug} is false:
+				set {jug} to true
+				broadcast "{@P} {@ChatColour}Enabled by &6%command sender%"
+				
+			else:
+				message "{@P} {@ChatColour}already enabled!"
+				
+		else if arg 1 is "disable" or "off":
+			if {jug} is true:
+				set {jug} to false
+				broadcast "{@P} (@ChatColour}Disabled by &6%command sender%"
+				
+			else:
+				message "{@P} (@ChatColour}already disabled!"
+				
+command /juggernaut [<text>]:
+	permission: skript.op
+	description: Sets a juggernaut
+	trigger:
+		if arg 1 is set:
+			if {juggernaut::%player%} is true:
+				message "{@P} {ChatColour}%arg1% is already set as the Juggernaut!"
+				
+			else:
+				set {juggernaut::%player%} to true
+				set {_jug} to %arg1%
+				broadcast "{@P} {ChatColour}%arg1% has been set as the Juggernaut!"
+				
+command /jugeffects:
+	permission: skript.op
+	description: Gives jug effects
+	trigger:
+		if {_jug} is online:
+			if {jug.haseffects} is false:
+				set {jug.haseffects} to true
+				set maximum health of {_jug} to 50
+				apply resistance 1 to {_jug} for 999 days
+				apply strength 1 to {_jug} for 999 days
+				apply slowness 1 to {_jug} for 999 days 
+				
+			else:
+				message "{@P} {@ChatColour}the Jug has already received his effects!"
+				
+on join:
+	if {juggernaut::%player%} is true:
+		if {jug.haseffects} is false:
+			set {jug.haseffects} to true
+			set maximum health of {_jug} to 50
+			apply resistance 1 to {_jug} for 999 days
+			apply strength 1 to {_jug} for 999 days
+			apply slowness 1 to {_jug} for 999 days
+			
+on death:
+	if {juggernaut::%player%} is true:
+		set {_jug} to the attacker
+		broadcast "{@P} {@ChatColour}the Jug has been slain! &9%attacker% {@ChatColour}is now the new Juggernaut!"
+		set {jug.haseffects::%{_jug}%} to true
+		set maximum health of {_jug} to 50
+		apply resistance 1 to {_jug} for 999 days
+		apply strength 1 to {_jug} for 999 days
+				
+				
